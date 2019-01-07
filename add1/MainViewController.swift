@@ -8,25 +8,33 @@
 
 import UIKit
 
-
+import MBProgressHUD
 class MainViewController: UIViewController {
     @IBOutlet weak var numbersLabel:UILabel?
     @IBOutlet weak var scoreLabel:UILabel?
     @IBOutlet weak var inputField:UITextField?
-    
+    @IBOutlet weak var timeLabel:UILabel?
     
     var score:Int = 0
     
+    var hud:MBProgressHUD?
     
+    var timer:Timer?
+    var seconds:Int = 60
     
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        hud = MBProgressHUD(view:self.view)
         
-
-        // Do any additional setup after loading the view.
+        if(hud != nil)
+        {
+            self.view.addSubview(hud!)
+        }
+        
+        setRandomNumberLabel()
+        updateScoreLabel()
+        
         inputField?.addTarget(self, action: #selector(textFieldDidChange(textField:)), for:UIControl.Event.editingChanged)
     }
     
@@ -35,8 +43,19 @@ class MainViewController: UIViewController {
         scoreLabel?.text = "\(score)"
     }
     
-    
-   
+    func updateTimeLabel()
+    {
+        if(timeLabel != nil)
+        {
+            let min:Int = (seconds / 60) % 60
+            let sec:Int = seconds % 60
+            
+            let min_p:String = String(format: "%02d", min)
+            let sec_p:String = String(format: "%02d", sec)
+            
+            timeLabel!.text = "\(min_p):\(sec_p)"
+        }
+    }
     
     func setRandomNumberLabel()
     {
@@ -60,27 +79,70 @@ class MainViewController: UIViewController {
             {
                 print("Correct！")
                 
-                
-                
+                showHUDWithAnswer(isRight: true)
                 score += 1
             }
             else
             {
                 print("Incorrect！")
                 
-                
-                
+                showHUDWithAnswer(isRight: false)
+
                 score -= 1
             }
         }
         setRandomNumberLabel()
         updateScoreLabel()
         
+        if(timer == nil)
+        {
+            timer = Timer.scheduledTimer(timeInterval: 1.0, target:self, selector:#selector(onUpdateTimer), userInfo:nil, repeats:true)
+        }
         
     }
-    
-    
-    
+    @objc func onUpdateTimer() -> Void
+    {
+        if(seconds > 0 && seconds <= 60)
+        {
+            seconds -= 1
+            
+            updateTimeLabel()
+        }
+        else if(seconds == 0)
+        {
+            if(timer != nil)
+            {
+                timer!.invalidate()
+                timer = nil
+            }
+        }
+    }
+    func showHUDWithAnswer(isRight:Bool)
+    {
+        var imageView:UIImageView?
+        
+        if isRight
+        {
+            imageView = UIImageView(image: UIImage(named:"thumbs-up"))
+        }
+        else
+        {
+            imageView = UIImageView(image: UIImage(named:"thumbs-down"))
+        }
+        
+        if(imageView != nil)
+        {
+            hud?.mode = MBProgressHUDMode.customView
+            hud?.customView = imageView
+            
+            hud?.show(animated: true)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                self.hud?.hide(animated: true)
+                self.inputField?.text = ""
+            }
+        }
+    }
     
     
     override func didReceiveMemoryWarning() {

@@ -20,6 +20,7 @@
                 <outlet property="inputField" destination="7bd-U1-kze" id="Nue-4o-Yd7"/>
                 <outlet property="numbersLabel" destination="u54-0s-JOW" id="as9-D3-4Ai"/>
                 <outlet property="scoreLabel" destination="vKp-YX-0t4" id="wWL-VV-OfD"/>
+                <outlet property="timeLabel" destination="BI1-Yd-Csm" id="kIi-BK-70g"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
