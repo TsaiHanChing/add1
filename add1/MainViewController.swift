@@ -7,23 +7,39 @@
 //
 
 import UIKit
-
+import AVFoundation
 import MBProgressHUD
 class MainViewController: UIViewController {
     @IBOutlet weak var numbersLabel:UILabel?
     @IBOutlet weak var scoreLabel:UILabel?
     @IBOutlet weak var inputField:UITextField?
     @IBOutlet weak var timeLabel:UILabel?
+    @IBOutlet weak var comboLabel: UILabel!
+    @IBOutlet weak var bomb: UIImageView!
+    @IBOutlet weak var bestLabel: UILabel!
     
     var score:Int = 0
     
     var hud:MBProgressHUD?
-    
+    var audioPlayer:AVAudioPlayer = AVAudioPlayer()
     var timer:Timer?
-    var seconds:Int = 60
+    var seconds:Int = 30
+    var combo:Int = 0
+    var best:Int = -100
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let path = Bundle.main.path(forResource: "music", ofType: "mp3")
+        let soundUrl = URL(fileURLWithPath: path!)
+        do{
+            try audioPlayer = AVAudioPlayer(contentsOf: soundUrl)
+            audioPlayer.volume = 1.0
+            audioPlayer.numberOfLoops = -1
+            audioPlayer.play()
+        }catch{
+            print(error)
+        }
+        
         
         hud = MBProgressHUD(view:self.view)
         
@@ -35,12 +51,23 @@ class MainViewController: UIViewController {
         setRandomNumberLabel()
         updateScoreLabel()
         
+        
         inputField?.addTarget(self, action: #selector(textFieldDidChange(textField:)), for:UIControl.Event.editingChanged)
     }
     
     func updateScoreLabel()
     {
         scoreLabel?.text = "\(score)"
+    }
+    
+    func updateComboLabel()
+    {
+        comboLabel?.text = "\(combo)"
+    }
+    
+    func updateBestLabel()
+    {
+        bestLabel?.text = "\(best)"
     }
     
     func updateTimeLabel()
@@ -81,6 +108,25 @@ class MainViewController: UIViewController {
                 
                 showHUDWithAnswer(isRight: true)
                 score += 1
+                combo += 1
+                if combo % 5 == 0
+                {
+                    seconds += 3
+                }
+                
+                let xorig = self.view.center.x
+                let yorig = self.view.center.y
+                let opts = UIView.AnimationOptions.autoreverse
+                UIView.animate(withDuration: 0.05, delay: 0, options: opts, animations: {
+                    self.view.center.x += 100
+                    self.view.center.y -= 100
+                }, completion: { _ in
+                    self.view.center.x = xorig
+                    self.view.center.y = yorig
+                })
+                
+                
+                
             }
             else
             {
@@ -89,10 +135,18 @@ class MainViewController: UIViewController {
                 showHUDWithAnswer(isRight: false)
 
                 score -= 1
+                combo = 0
+                seconds -= 1
+                
+                
+                
             }
+            
         }
+        
         setRandomNumberLabel()
         updateScoreLabel()
+        updateComboLabel()
         
         if(timer == nil)
         {
@@ -114,6 +168,29 @@ class MainViewController: UIViewController {
             {
                 timer!.invalidate()
                 timer = nil
+                
+                let alertController = UIAlertController(title: "Time Up!", message: "Time's up! You got a score of: \(score) points!", preferredStyle: .alert)
+                
+                let restartAction = UIAlertAction(title: "Restart", style: .default, handler: nil)
+                alertController.addAction(restartAction)
+                
+                self.present(alertController, animated: true, completion: nil)
+                
+                if score > best
+                {
+                    best = score
+                    updateBestLabel()
+                }
+                
+                score = 0
+                seconds = 30
+                combo = 0
+                
+                updateComboLabel()
+                updateTimeLabel()
+                updateScoreLabel()
+                setRandomNumberLabel()
+                
             }
         }
     }
@@ -137,7 +214,7 @@ class MainViewController: UIViewController {
             
             hud?.show(animated: true)
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.hud?.hide(animated: true)
                 self.inputField?.text = ""
             }

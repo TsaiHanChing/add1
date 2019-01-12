@@ -16,6 +16,7 @@
 		436DEB4A21E3175900AE2964 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 436DEB4821E3175900AE2964 /* MainViewController.xib */; };
 		436DEB4C21E318B000AE2964 /* HVD_Comic_Serif_Pro.otf in Resources */ = {isa = PBXBuildFile; fileRef = 436DEB4B21E318B000AE2964 /* HVD_Comic_Serif_Pro.otf */; };
 		436DEB4E21E32E7000AE2964 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 436DEB4D21E32E7000AE2964 /* Podfile */; };
+		4B83A07421E9E632001EF30F /* music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4B83A07321E9E632001EF30F /* music.mp3 */; };
 		B2F9E02FF5430BF2772A14F8 /* Pods_add1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8087E6B89FC61D42E7ADA8C /* Pods_add1.framework */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +34,7 @@
 		436DEB4B21E318B000AE2964 /* HVD_Comic_Serif_Pro.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = HVD_Comic_Serif_Pro.otf; sourceTree = "<group>"; };
 		436DEB4D21E32E7000AE2964 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 		436DEB4F21E33A1200AE2964 /* add1-bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "add1-bridging-Header.h"; sourceTree = "<group>"; };
+		4B83A07321E9E632001EF30F /* music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = music.mp3; sourceTree = "<group>"; };
 		A4F404014567418D5E20CCF6 /* Pods-add1.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-add1.release.xcconfig"; path = "Pods/Target Support Files/Pods-add1/Pods-add1.release.xcconfig"; sourceTree = "<group>"; };
 		A8087E6B89FC61D42E7ADA8C /* Pods_add1.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_add1.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -60,6 +62,7 @@
 		436DEB2921E316A700AE2964 = {
 			isa = PBXGroup;
 			children = (
+				4B83A07321E9E632001EF30F /* music.mp3 */,
 				436DEB4F21E33A1200AE2964 /* add1-bridging-Header.h */,
 				436DEB4D21E32E7000AE2964 /* Podfile */,
 				436DEB3421E316A700AE2964 /* add1 */,
@@ -167,6 +170,7 @@
 				436DEB4C21E318B000AE2964 /* HVD_Comic_Serif_Pro.otf in Resources */,
 				436DEB3D21E316A700AE2964 /* Assets.xcassets in Resources */,
 				436DEB3B21E316A700AE2964 /* Main.storyboard in Resources */,
+				4B83A07421E9E632001EF30F /* music.mp3 in Resources */,
 				436DEB4A21E3175900AE2964 /* MainViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -376,6 +380,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = add1/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -395,6 +400,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = add1/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
